@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: consolas;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #edf1f4;
+        }
+        .calculator {
+            position: relative;
+            width: 350px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 15px 15px 20px rgba(0,0,0,0.1), -15px 15px 20px #fffbff;
+        }
+        .calculator .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calculator #value {
+            grid-column: span 4;
+            user-select: none;
+            text-align: end;
+            color: rgba(0, 0, 255, 0.485);
+            height: 100px;
+            line-height: 100px;
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.1), inset -5px -5px 20px #fff;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-size: 2em;
+            font-weight: 550;
+            padding-right: 10px;
+        }
+        .calculator .buttons span {
+            padding: 10px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: #666;
+            border: 2px solid #fff;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1), -5px -5px 10px #fff;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .calculator .buttons span#clear {
+            grid-column: span 2;
+            background-color: #f44335;
+            color: #fff;
+        }
+        .calculator .buttons span#plus {
+            grid-row: span 2;
+            background: #31a935;
+            color: #fff;
+        }
+        .calculator .buttons span#equal {
+            grid-row: span 2;
+            background: #2196f3;
+            color: #fff;
+        }
+        .calculator .buttons span:active {
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div id="value"></div>
+        <div class="buttons">
+            <span id="clear">Clear</span>
+            <span>/</span>
+            <span>*</span>
+            <span>-</span>
+            <span>7</span>
+            <span>8</span>
+            <span>9</span>
+            <span id="plus">+</span>
+            <span>4</span>
+            <span>5</span>
+            <span>6</span>
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>0</span>
+            <span>00</span>
+            <span>.</span>
+            <span id="equal">=</span>
+        </div>
+    </div>
+    <script>
+        let buttons = document.querySelectorAll('.buttons span');
+        let value = document.getElementById('value');
+        let expression = '';
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                let buttonText = this.innerHTML;
+
+                if (buttonText === 'Clear') {
+                    expression = '';
+                    value.innerHTML = '';
+                } else if (buttonText === '=') {
+                    try {
+                        value.innerHTML = eval(expression);
+                        expression = value.innerHTML; 
+                    } catch {
+                        value.innerHTML = 'Error';
+                        expression = '';
+                    }
+                } else {
+                    expression += buttonText;
+                    value.innerHTML = expression;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
